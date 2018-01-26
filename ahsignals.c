@@ -7,8 +7,11 @@
 static void sighandler(int signo){
 
     if (signo == SIGINT){
-        printf("Getting out...\n");
-        exit(1);
+        int fd = open("ahsignals.txt", O_CREAT | O_WRONLY | O_APPEND, 0644);
+        char str[] = "Getting out... \n";
+        write(fd, str, sizeof(str));
+        close(fd);
+        exit(SIGINT);
     }
 
     if (signo == SIGSTOP){
